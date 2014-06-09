@@ -1,0 +1,49 @@
+<%= nested_form_for @game, role: "form" do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Game name" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :company %>
+    <%= f.text_field :company, class: "form-control", placeholder: "Company" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :fingerprint %>
+    <%= f.text_field :fingerprint, class: "form-control", placeholder: "Fingerprint" %>
+  </div>
+
+  <%= f.fields_for :releases do |release_form| %>
+    <div style="border: 1px solid red; margin: 1em">
+      <%= release_form.label :name %>
+      <%= release_form.text_field :name, class: "form-control" %>
+      <%= release_form.link_to_remove "Remove this release", class: "btn btn-danger" %>
+
+      <%= release_form.fields_for :versions do |version_form| %>
+        <div style="border: 1px solid green; margin: 1em">
+          <%= version_form.label :name %>
+          <%= version_form.text_field :name, class: "form-control" %>
+
+          <%= version_form.link_to_remove "Remove this version", class: "btn btn-danger" %>
+
+          <%= version_form.fields_for :discs do |disc_form| %>
+            <div style="border: 1px solid green; margin: 1em">
+              <%= disc_form.label :fingerprint %>
+              <%= disc_form.text_field :fingerprint, class: "form-control" %>
+
+              <%= disc_form.link_to_remove "Remove this disc", class: "btn btn-danger" %>
+            </div>
+          <% end %>
+          <p><%= version_form.link_to_add "Add a Disc", :discs, class: "btn btn-success" %></p>
+
+        </div>
+      <% end %>
+      <p><%= release_form.link_to_add "Add a Version", :versions, class: "btn btn-success" %></p>
+    </div>
+
+  <% end %>
+  <p><%= f.link_to_add "Add a Release", :releases, class: "btn btn-success" %></p>
+
+  <%= f.submit "Create Game", class: "btn btn-success" %>
+<% end %>
