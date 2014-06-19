@@ -4,7 +4,7 @@ namespace :reicast do
   desc "USAGE: rake reicast:json"
   task json: :environment do
     puts "Starting json parsing..."
-    @data = JSON.parse(File.read(Rails.root.join('public/games.json')))
+    @data = JSON.parse(File.read(Rails.root.join('public/games-3.json')))
     # binding.pry
     # puts @data
 
